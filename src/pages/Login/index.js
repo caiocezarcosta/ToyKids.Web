@@ -12,7 +12,7 @@ export default function Login() {
     const { cpf, senha } = data;
 
     // Pra logar
-    if (cpf === '12345678901' && senha === 'senha123') {
+    if (cpf === '12345678901' && senha === '1') {
       Alert.alert('Sucesso', 'Login realizado com sucesso!');
       reset();
       navigation.navigate('Menu');
