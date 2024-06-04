@@ -10,8 +10,7 @@ import Petisco from '../pages/Petisco'
 import Doce from '../pages/Doce'
 import Massa from '../pages/Massa'
 import Bebida from '../pages/Bebidas'
-import Localizacao from '../pages/Localizacao/localizacao'
-import SobreNos from '../pages/SobreNos'
+import SobreNos from '../pages/Sobrenos'
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
@@ -76,13 +75,7 @@ export default function Routes() {
       />
 
       <Stack.Screen
-        name='Localizacao'
-        component={Localizacao}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name='SobreNos'
+        name='Sobrenos'
         component={SobreNos}
         options={{headerShown: false}}
       />

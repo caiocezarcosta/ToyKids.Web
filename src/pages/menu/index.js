@@ -21,18 +21,6 @@ export default function Menu() {
             </TouchableOpacity>
             <TouchableOpacity 
                 style={styles.menuItem} 
-                onPress={() => navigation.navigate('Promocoes')}
-            >
-                <Text>Promoções</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                style={styles.menuItem} 
-                onPress={() => navigation.navigate('Localizacao')}
-            >
-                <Text>Localização</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                style={styles.menuItem} 
                 onPress={() => navigation.navigate('SobreNos')}
             >
                 <Text>Sobre Nós</Text>

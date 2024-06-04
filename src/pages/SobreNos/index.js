@@ -6,7 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 
 const { width, height } = Dimensions.get('window');
 
-export default function SobreNos() {
+export default function Sobrenos() {
   const navigation = useNavigation();
 
   return (
