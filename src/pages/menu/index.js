@@ -1,7 +1,7 @@
 import { StatusBar } from 'react-native';
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 
@@ -12,11 +12,15 @@ export default function Home() {
     <View style={styles.container}>
       <StatusBar backgroundColor='#26333B' barStyle="light-content" />
 
+      <TouchableOpacity style={styles.btnLogin} onPress={() => navigation.navigate('Login')}>
+          <AntDesign name="logout" size={24} color="white" />
+      </TouchableOpacity>
+
       <View style={styles.menuContainer}>
         <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Cardapio')}>
           <Text style={styles.menuButtonText}>CARDÁPIO</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Agendar')}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Agendamento')}>
           <Text style={styles.menuButtonText}>AGENDAR</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Sobrenos')}>
@@ -57,6 +61,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#26333B',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  btnLogin: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
   },
   welcomeText: {
     color: 'white',
