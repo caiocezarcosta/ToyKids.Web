@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import AuthContext from '../../context/AuthContext';
 
 moment.locale('pt-br');
 
@@ -27,11 +28,45 @@ export default function Booking() {
 
   const spaces = ["Espaço Princesas", "Espaço Super-Heróis", "Espaço Desenho Animado"];
 
+  const { usuario } = useContext(AuthContext);
+
   const onSubmit = async (data) => {
     const { nome, email, cpf } = data;
-    Alert.alert('Sucesso', `Reserva feita para ${moment(date).format('LL')} às ${time}`);
-    reset();
-    navigation.navigate('Menu'); 
+    const url = `http://10.0.2.2:5291/api/reservas`;
+
+    const reserva = {
+      dataReserva: date,
+      horaReserva: time,
+      quantidadePessoas: people,
+      espacoFesta: party,
+      nomeEspacoFesta: party ? space : null,
+      usuarioId: usuario.usuarioId
+    }
+
+    console.log(reserva);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reserva)
+      })
+
+      console.log(response);
+
+      if (response.ok) {
+        Alert.alert('Sucesso', `Reserva feita para ${moment(date).format('LL')} às ${time}`);
+        reset();
+        navigation.navigate('Menu');
+      } else {
+        Alert.alert('Erro', 'Não foi possível realizar o agendamento.');
+      }
+    } catch {
+      console.error(error);
+      Alert.alert('Erro', 'Ocorreu um erro. Por favor, tente novamente mais tarde.');
+    }     
   };
 
   return (

@@ -8,13 +8,34 @@ export default function Register() {
   const navigation = useNavigation();
   const { control, handleSubmit, reset } = useForm();
 
-  const cadastro = (data) => {
+  const cadastro = async (data) => {
     const { nome, email, cpf, senha } = data;
+    console.log(data);
 
-    //(backend)
-    Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-    reset();
-    navigation.navigate('Login');
+    const url = `http://10.0.2.2:5291/api/usuario`;
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        })
+
+        console.log(response);
+
+        if (response.ok) {
+          Alert.alert('Sucesso', 'Usuário criado com sucesso!');
+          reset();
+          navigation.navigate('Login');
+        } else {
+          Alert.alert('Erro', 'Não foi possível criar o usuário.');
+        }
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Erro', 'Ocorreu um erro. Por favor, tente novamente mais tarde.');
+      }
   };
 
   return (

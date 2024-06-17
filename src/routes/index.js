@@ -12,11 +12,13 @@ import Massa from '../pages/Massa'
 import Bebida from '../pages/Bebidas'
 import SobreNos from '../pages/Sobrenos'
 import Agendamento from '../pages/Agendamento'
+import AdminUser from '../pages/AdminUser'
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
     <Stack.Navigator>
+      
       <Stack.Screen
         name="Welcome"
         component={Welcome}
@@ -85,6 +87,12 @@ export default function Routes() {
         name='Agendamento'
         component={Agendamento}
         options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="AdminUser"
+        component={AdminUser}
+        options={{ headerShown: false }}
       />
 
     </Stack.Navigator>

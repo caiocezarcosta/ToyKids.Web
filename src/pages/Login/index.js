@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
+import AuthContext from '../../context/AuthContext';
 
 export default function Login() {
   const navigation = useNavigation();
   const { control, handleSubmit, reset } = useForm();
+  const { login } = useContext(AuthContext)
 
-  const login = (data) => {
+  const handlelogin = async (data) => {
     const { cpf, senha } = data;
 
-    // Pra logar
-    if (cpf === '12345678901' && senha === '1') {
-      Alert.alert('Sucesso', 'Login realizado com sucesso!');
-      reset();
-      navigation.navigate('Menu');
-    } else {
-      Alert.alert('Erro', 'CPF ou senha incorretos.');
+    const url = `http://10.0.2.2:5291/api/usuario/login?CPF=${cpf}&senha=${senha}`;
+
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+
+      if (response.ok && result.data) {
+        Alert.alert('Sucesso', `Seja bem-vindo(a), ${result.data.nome}`);
+        login(result.data)
+        reset();
+        if (result.data.nome === "AdminUser") {
+          navigation.navigate('AdminUser');
+        } else {
+          navigation.navigate('Menu');
+        }
+      } else {
+        Alert.alert('Erro', 'CPF ou senha incorretos.');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível realizar o login. Por favor, tente novamente mais tarde.');
     }
   };
 
@@ -66,7 +82,7 @@ export default function Login() {
         )}
       />
 
-      <TouchableOpacity style={styles.btnLogin} onPress={handleSubmit(login)}>
+      <TouchableOpacity style={styles.btnLogin} onPress={handleSubmit(handlelogin)}>
         <Text style={{ color: 'white', textAlign: 'center' }}>Login</Text>
       </TouchableOpacity>
 

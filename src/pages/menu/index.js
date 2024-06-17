@@ -1,18 +1,29 @@
 import { StatusBar } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
+import AuthContext from '../../context/AuthContext';
 
 export default function Home() {
   const navigation = useNavigation();
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor='#26333B' barStyle="light-content" />
 
-      <TouchableOpacity style={styles.btnLogin} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity style={styles.btnLogin} onPress={handleLogout}>
           <AntDesign name="logout" size={24} color="white" />
       </TouchableOpacity>
 
